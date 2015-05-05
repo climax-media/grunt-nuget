@@ -1,4 +1,4 @@
-# grunt-nuget [![NPM version](https://badge.fury.io/js/grunt-nuget.png)](http://badge.fury.io/js/grunt-nuget)
+# grunt-nuget
 
 [Grunt][grunt] NuGet Interface - Create and publish your NuGet packages using GruntJS.
 
@@ -37,7 +37,7 @@ For package publication : ([more informations][push-options])
 	nugetpush: {
 		dist: {
 			src: 'tests/*.nupkg',
- 
+
 			options: {
 				apiKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
 			}
@@ -75,7 +75,7 @@ grunt nugetkey --key=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 
 ## Release History
 * 0.1.0 Initial Release
-* 0.1.1 Fix issue with OutputDirectory in NuGet Push 
+* 0.1.1 Fix issue with OutputDirectory in NuGet Push
 * 0.1.2
     * Update NuGet.exe to version 2.8
     * Add support for csproj files in nugetpack command.
