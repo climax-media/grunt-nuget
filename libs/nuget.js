@@ -6,7 +6,7 @@
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without restriction,
+ * files (the 'Software'), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
  * publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so,
@@ -15,7 +15,7 @@
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
  * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
@@ -27,13 +27,13 @@
 var path = require('path');
 var async = require('async');
 var _ = require('lodash');
-var nugetPath = path.join(__dirname, "NuGet.exe");
+var nugetPath = path.join(__dirname, 'NuGet.exe');
 
 module.exports = function(grunt) {
   var useMono = (process.platform !== 'win32'),
     executable = useMono ? 'mono' : nugetPath;
 
-    createArguments = function(command, path, args) {
+  createArguments = function(command, path, args) {
       var result = [];
 
       if (useMono) {
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
       result.push(path);
 
       for (var key in args) {
-        var argKey = "-" + key[0].toUpperCase() + key.slice(1);
+        var argKey = '-' + key[0].toUpperCase() + key.slice(1);
         result.push(argKey);
 
         if (args[key] && args[key] !== true)
@@ -57,10 +57,10 @@ module.exports = function(grunt) {
     createSpawnCallback = function(path, args, callback) {
       return function(error, result, code) {
         if (error) {
-          var _error = "Error while trying to execute NuGet Command Line on file " + path + "\n" + error;
+          var _error = 'Error while trying to execute NuGet Command Line on file ' + path + '\n' + error;
           callback(error);
         } else {
-          if ("verbose" in args) {
+          if ('verbose' in args) {
             grunt.log.writeln(result);
           }
 
@@ -71,60 +71,60 @@ module.exports = function(grunt) {
     },
 
     isSpecFile = function(file) {
-      return path.extname(file) === ".nuspec" || path.extname(file) === ".csproj";
+      return path.extname(file) === '.nuspec' || path.extname(file) === '.csproj';
     },
 
     isPackageFile = function(file) {
-      return path.extname(file) === ".nupkg";
+      return path.extname(file) === '.nupkg';
     },
     isSolutionFile = function(file) {
-      return path.extname(file) === ".sln";
+      return path.extname(file) === '.sln';
     },
     isConfigFile = function(file) {
-      return path.basename(file) === "packages.config";
+      return path.basename(file) === 'packages.config';
     },
 
     pack = function(path, args, callback) {
       if (!isSpecFile(path)) {
-        callback("File path '" + path + "' is not a NuGet specification file !");
+        callback('File path \'' + path + '\' is not a NuGet specification file !');
         return;
       }
 
-      grunt.log.writeln("Trying to create NuGet package from " + path + ". ");
+      grunt.log.writeln('Trying to create NuGet package from ' + path + '. ');
       grunt.util.spawn({
         cmd: executable,
-        args: createArguments("Pack", path, args)
+        args: createArguments('Pack', path, args)
       }, createSpawnCallback(path, args, callback));
     },
 
     push = function(path, args, callback) {
       if (!isPackageFile(path)) {
-        callback("File path '" + path + "' is not a NuGet package file !");
+        callback('File path \'' + path + '\' is not a NuGet package file !');
         return;
       }
 
-      grunt.log.writeln("Trying to publish NuGet package " + path + ". ");
+      grunt.log.writeln('Trying to publish NuGet package ' + path + '. ');
       grunt.util.spawn({
         cmd: executable,
-        args: createArguments("Push", path, args)
+        args: createArguments('Push', path, args)
       }, createSpawnCallback(path, args, callback));
     },
     restore = function(path, args, callback) {
       if (!isSolutionFile(path) && !isConfigFile(path)) {
-        callback("File path '" + path + "' is not a valid solution file or packages.config !");
+        callback('File path \'' + path + '\' is not a valid solution file or packages.config !');
         return;
       }
 
-      grunt.log.writeln("Trying to restore NuGet packages for " + path + ". ");
+      grunt.log.writeln('Trying to restore NuGet packages for ' + path + '. ');
       grunt.util.spawn({
         cmd: executable,
-        args: createArguments("Restore", path, args)
+        args: createArguments('Restore', path, args)
       }, createSpawnCallback(path, args, callback));
     },
     setapikey = function(key, args, callback) {
       grunt.util.spawn({
         cmd: executable,
-        args: createArguments("SetApiKey", key, args)
+        args: createArguments('SetApiKey', key, args)
       }, createSpawnCallback(null, args, callback));
     };
 
