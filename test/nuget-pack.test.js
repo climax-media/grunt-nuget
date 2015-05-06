@@ -30,7 +30,7 @@ exports.nugetpack = {
   defaultOptions: function (test) {
     test.expect(1);
 
-    var packageCreated = grunt.file.exists('.tmp/SampleNuGetPackage.1.0.0.0.nupkg');
+    var packageCreated = grunt.file.exists('.tmp/build/packages/SampleNuGetPackage.1.0.0.0.nupkg');
     test.ok(packageCreated, 'should create a .nupkg file');
 
     test.done();

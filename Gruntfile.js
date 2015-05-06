@@ -6,7 +6,7 @@
         options: {
         },
         src: 'test/fixtures/**/*.csproj',
-        dest: '.tmp'
+        dest: '.tmp/build/packages'
       }
     },
 
@@ -14,6 +14,16 @@
       defaultOptions: {
         src: 'test/fixtures/**/packages.config',
         dest: '.tmp/packages/'
+      }
+    },
+
+    nugetpush: {
+      dist: {
+        src: '.tmp/build/packages/*.nupkg',
+        options: {
+          source: 'http://mynugetserver.com',
+          apiKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
+        }
       }
     },
 

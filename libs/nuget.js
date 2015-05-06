@@ -90,7 +90,7 @@ module.exports = function(grunt) {
 
     pack = function(path, args, callback) {
       if (!isSpecFile(path)) {
-        callback('File path \'' + path + '\' is not a NuGet specification (.nuspec) or project (.csproj) file');
+        callback(path + '\' is not a NuGet specification (.nuspec) or project (.csproj) file');
         return;
       }
 
@@ -111,7 +111,7 @@ module.exports = function(grunt) {
 
     push = function(path, args, callback) {
       if (!isPackageFile(path)) {
-        callback('File path \'' + path + '\' is not a NuGet package file (.nupkg)');
+        callback(path + '\' is not a NuGet package file (.nupkg)');
         return;
       }
 
@@ -127,7 +127,7 @@ module.exports = function(grunt) {
     },
     restore = function(path, args, callback) {
       if (!isSolutionFile(path) && !isConfigFile(path)) {
-        callback('File path \'' + path + '\' is not a valid solution file or packages.config');
+        callback(path + '\' is not a valid solution file or packages.config');
         return;
       }
 

@@ -26,9 +26,11 @@ For package creation: ([more informations][pack-options])
 
 ```javascript
   nugetpack: {
-    dist: {
-      src: 'tests/Package.nuspec',
-      dest: 'tests/'
+    defaultOptions: {
+      options: {
+      },
+      src: 'test/fixtures/**/*.csproj',
+      dest: '.tmp'
     }
   }
 ```
@@ -51,10 +53,10 @@ For package restore : ([more informations][restore-options])
 
 ```javascript
   nugetrestore: {
-  	restore: {
-  		src: 'tests/packages.config',
-  		dest: 'packages/'
-  	}
+    defaultOptions: {
+      src: 'test/fixtures/**/packages.config',
+      dest: '.tmp/packages/'
+    }
   }
 ```
 
