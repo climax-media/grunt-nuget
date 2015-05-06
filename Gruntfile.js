@@ -11,9 +11,9 @@
     },
 
     nugetrestore: {
-      restore: {
-        src: 'tests/packages.config',
-        dest: 'packages/'
+      defaultOptions: {
+        src: 'test/fixtures/**/packages.config',
+        dest: '.tmp/packages/'
       }
     },
 
@@ -35,7 +35,7 @@
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'nugetpack', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'nugetrestore', 'nugetpack', 'nodeunit']);
 
   grunt.registerTask('default', ['clean', 'nugetpack', 'nugetrestore']);
 };
