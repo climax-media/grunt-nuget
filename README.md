@@ -6,7 +6,7 @@
 
 Install this grunt plugin next to your project's gruntfile with: `npm install grunt-nuget --save-dev`
 
-NOTE : if you are on a unix system, you should install [Mono][mono] first.
+> **Note** OSX/Unix environment require [Mono][mono] to run NuGet.exe commands
 
 Then add this line to your project's `Gruntfile.js` :
 
@@ -20,7 +20,9 @@ Then specify your config:
 grunt.initConfig({
 ```
 
-For package creation : ([more informations][pack-options])
+For package creation: ([more informations][pack-options])
+
+*Note: NuGet Pack does not work with mono. See [here](http://nuget.codeplex.com/workitem/2140).*
 
 ```javascript
   nugetpack: {

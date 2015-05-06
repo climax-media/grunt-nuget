@@ -27,17 +27,21 @@
 var path = require('path');
 var async = require('async');
 var _ = require('lodash');
-var nugetPath = path.join(__dirname, 'NuGet.exe');
+var nugetPathDefault = path.join(__dirname, 'NuGet.exe');
 
 module.exports = function(grunt) {
   var useMono = (process.platform !== 'win32'),
-    executable = useMono ? 'mono' : nugetPath;
+    executable = useMono ? 'mono' : nugetPathDefault,
+
+  logCommand = function(opts) {
+    grunt.verbose.writeln('Running NuGet.exe from [' + opts.cmd + '] with args [' + opts.args + ']');
+  };
 
   createArguments = function(command, path, args) {
       var result = [];
 
       if (useMono) {
-        result.push(nugetPath);
+        result.push(nugetPathDefault);
       }
 
       result.push(command);
@@ -86,40 +90,56 @@ module.exports = function(grunt) {
 
     pack = function(path, args, callback) {
       if (!isSpecFile(path)) {
-        callback('File path \'' + path + '\' is not a NuGet specification file !');
+        callback('File path \'' + path + '\' is not a NuGet specification (.nuspec) or project (.csproj) file');
         return;
       }
 
-      grunt.log.writeln('Trying to create NuGet package from ' + path + '. ');
-      grunt.util.spawn({
+      if (useMono) {
+        grunt.log.warn('NuGet pack for .proj files is not currently supported by mono. More information: http://nuget.codeplex.com/workitem/2140');
+      }
+
+      var opts = {
         cmd: executable,
         args: createArguments('Pack', path, args)
-      }, createSpawnCallback(path, args, callback));
+      };
+
+      logCommand(opts);
+
+      grunt.log.writeln('Trying to create NuGet package from ' + path);
+      grunt.util.spawn(opts, createSpawnCallback(path, args, callback));
     },
 
     push = function(path, args, callback) {
       if (!isPackageFile(path)) {
-        callback('File path \'' + path + '\' is not a NuGet package file !');
+        callback('File path \'' + path + '\' is not a NuGet package file (.nupkg)');
         return;
       }
 
-      grunt.log.writeln('Trying to publish NuGet package ' + path + '. ');
-      grunt.util.spawn({
+      var opts = {
         cmd: executable,
         args: createArguments('Push', path, args)
-      }, createSpawnCallback(path, args, callback));
+      };
+
+      logCommand(opts);
+      grunt.log.writeln('Trying to publish NuGet package ' + path);
+
+      grunt.util.spawn(opts, createSpawnCallback(path, args, callback));
     },
     restore = function(path, args, callback) {
       if (!isSolutionFile(path) && !isConfigFile(path)) {
-        callback('File path \'' + path + '\' is not a valid solution file or packages.config !');
+        callback('File path \'' + path + '\' is not a valid solution file or packages.config');
         return;
       }
 
-      grunt.log.writeln('Trying to restore NuGet packages for ' + path + '. ');
-      grunt.util.spawn({
+      var opts = {
         cmd: executable,
         args: createArguments('Restore', path, args)
-      }, createSpawnCallback(path, args, callback));
+      };
+
+      logCommand(opts);
+
+      grunt.log.writeln('Trying to restore NuGet packages for ' + path);
+      grunt.util.spawn(opts, createSpawnCallback(path, args, callback));
     },
     setapikey = function(key, args, callback) {
       grunt.util.spawn({

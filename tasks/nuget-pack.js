@@ -52,9 +52,8 @@ module.exports = function(grunt) {
       },
       function(err) {
         if (err) {
-          grunt.log.error().error(err);
+          grunt.log.error(err);
           done(false);
-          return;
         }
 
         grunt.log.ok('NuGet Packages created !');
