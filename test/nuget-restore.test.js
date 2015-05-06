@@ -34,5 +34,14 @@ exports.nugetrestore = {
     test.ok(packageCreated, 'should restore packages');
 
     test.done();
+  },
+
+  customNugetExe: function (test) {
+    test.expect(1);
+
+    var packageCreated = grunt.file.exists('.tmp/packages/Newtonsoft.Json.6.0.8');
+    test.ok(packageCreated, 'should restore packages');
+
+    test.done();
   }
 };

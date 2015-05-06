@@ -35,7 +35,27 @@ module.exports = function(grunt) {
 
   logCommand = function(opts) {
     grunt.verbose.writeln('Running NuGet.exe from [' + opts.cmd + '] with args [' + opts.args + ']');
-  };
+  },
+
+  // Check if a nugetExe option was supplied and configure tasks to run it rather
+  // than the default.  If found, remove from args list so it isn't parsed into a
+  // NuGet CLI parameter.
+  establishNugetExe = function(args) {
+    if (args && args.nugetExe) {
+      if (grunt.file.exists(args.nugetExe)) {
+        executable = args.nugetExe;
+      } else {
+        grunt.log.warn('Unable to locate NuGet.exe at ', args.nugetExe);
+        grunt.log.warn('Falling back to default: ', executable);
+      }
+
+      delete args.nugetExe;
+    } else {
+      grunt.log.info('nugetExe option not supplied. Using default: ' + executable);
+    }
+
+    return args;
+  },
 
   createArguments = function(command, path, args) {
       var result = [];
@@ -98,6 +118,8 @@ module.exports = function(grunt) {
         grunt.log.warn('NuGet pack for .proj files is not currently supported by mono. More information: http://nuget.codeplex.com/workitem/2140');
       }
 
+      args = establishNugetExe(args);
+
       var opts = {
         cmd: executable,
         args: createArguments('Pack', path, args)
@@ -115,6 +137,8 @@ module.exports = function(grunt) {
         return;
       }
 
+      args = establishNugetExe(args);
+
       var opts = {
         cmd: executable,
         args: createArguments('Push', path, args)
@@ -122,7 +146,6 @@ module.exports = function(grunt) {
 
       logCommand(opts);
       grunt.log.writeln('Trying to publish NuGet package ' + path);
-
       grunt.util.spawn(opts, createSpawnCallback(path, args, callback));
     },
     restore = function(path, args, callback) {
@@ -130,6 +153,8 @@ module.exports = function(grunt) {
         callback(path + '\' is not a valid solution file or packages.config');
         return;
       }
+
+      args = establishNugetExe(args);
 
       var opts = {
         cmd: executable,
@@ -140,12 +165,6 @@ module.exports = function(grunt) {
 
       grunt.log.writeln('Trying to restore NuGet packages for ' + path);
       grunt.util.spawn(opts, createSpawnCallback(path, args, callback));
-    },
-    setapikey = function(key, args, callback) {
-      grunt.util.spawn({
-        cmd: executable,
-        args: createArguments('SetApiKey', key, args)
-      }, createSpawnCallback(null, args, callback));
     };
 
   return {
@@ -154,7 +173,6 @@ module.exports = function(grunt) {
 
     pack: pack,
     push: push,
-    restore: restore,
-    setapikey: setapikey
+    restore: restore
   };
 };

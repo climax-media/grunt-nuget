@@ -7,11 +7,25 @@
         },
         src: 'test/fixtures/**/*.csproj',
         dest: '.tmp/build/packages'
+      },
+      customNugetExePath: {
+        options: {
+          nugetExe: 'test/fixtures/SampleNugetPackage/.nuget/NuGet.exe'
+        },
+        src: 'test/fixtures/**/*.csproj',
+        dest: '.tmp/build/packages'
       }
     },
 
     nugetrestore: {
       defaultOptions: {
+        src: 'test/fixtures/**/packages.config',
+        dest: '.tmp/packages/'
+      },
+      customNugetExePath: {
+        options: {
+          nugetExe: 'test/fixtures/SampleNugetPackage/.nuget/NuGet.exe'
+        },
         src: 'test/fixtures/**/packages.config',
         dest: '.tmp/packages/'
       }
