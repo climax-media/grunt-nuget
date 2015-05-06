@@ -51,7 +51,7 @@ module.exports = function(grunt) {
 
       delete args.nugetExe;
     } else {
-      grunt.log.info('nugetExe option not supplied. Using default: ' + executable);
+      grunt.log.writeln('nugetExe option not supplied. Using default: ' + executable);
     }
 
     return args;

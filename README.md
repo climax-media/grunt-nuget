@@ -20,14 +20,15 @@ Then specify your config:
 grunt.initConfig({
 ```
 
-For package creation: ([more informations][pack-options])
+For package creation: ([more information][pack-options])
 
 *Note: NuGet Pack does not work with mono. See [here](http://nuget.codeplex.com/workitem/2140).*
 
 ```javascript
   nugetpack: {
-    defaultOptions: {
+    dist: {
       options: {
+        nugetExe: 'test/fixtures/SampleNugetPackage/.nuget/NuGet.exe'
       },
       src: 'test/fixtures/**/*.csproj',
       dest: '.tmp'
@@ -35,7 +36,7 @@ For package creation: ([more informations][pack-options])
   }
 ```
 
-For package publication : ([more informations][push-options])
+For package publication: ([more information][push-options])
 
 ```javascript
   nugetpush: {
@@ -43,17 +44,21 @@ For package publication : ([more informations][push-options])
   		src: 'tests/*.nupkg',
 
   		options: {
-  			apiKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
+  			apiKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX',
+        nugetExe: 'test/fixtures/SampleNugetPackage/.nuget/NuGet.exe'
   		}
   	}
   }
 ```
 
-For package restore : ([more informations][restore-options])
+For package restore: ([more information][restore-options])
 
 ```javascript
   nugetrestore: {
-    defaultOptions: {
+    dist: {
+      options: {
+        nugetExe: 'test/fixtures/SampleNugetPackage/.nuget/NuGet.exe'
+      },
       src: 'test/fixtures/**/packages.config',
       dest: '.tmp/packages/'
     }
@@ -62,12 +67,6 @@ For package restore : ([more informations][restore-options])
 
 ```javascript
 });
-```
-
-In order to avoid specifying your API Key inside your package you can use command line task : ([more informations][key-options])
-
-```
-grunt nugetkey --key=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 ```
 
 [grunt]: https://github.com/gruntjs/grunt
@@ -79,6 +78,9 @@ grunt nugetkey --key=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 
 ## Release History
 
+* 0.1.6
+  * Remove apikey task
+  * Add optional custom NuGet.exe path for each task
 * 0.1.5
   * Migrate deprecated Grunt utils (`_`, `async`) in favour of async & lodash libs
   * Formatting (tabs -> spaces)
