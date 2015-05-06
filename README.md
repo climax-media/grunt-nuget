@@ -22,7 +22,7 @@ grunt.initConfig({
 
 For package creation: ([more information][pack-options])
 
-*Note: NuGet Pack does not work with mono. See [here](http://nuget.codeplex.com/workitem/2140).*
+> *Note: NuGet Pack does not work with mono. See [here](http://nuget.codeplex.com/workitem/2140).*
 
 ```javascript
   nugetpack: {
@@ -40,14 +40,13 @@ For package publication: ([more information][push-options])
 
 ```javascript
   nugetpush: {
-  	dist: {
-  		src: 'tests/*.nupkg',
-
-  		options: {
-  			apiKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX',
+    dist: {
+      src: 'tests/*.nupkg',
+      options: {
+        apiKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX',
         nugetExe: 'test/fixtures/SampleNugetPackage/.nuget/NuGet.exe'
-  		}
-  	}
+      }
+    }
   }
 ```
 
