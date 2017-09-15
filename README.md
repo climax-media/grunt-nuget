@@ -95,8 +95,6 @@ grunt nugetkey --key=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 ## Release History
 
 
-
-
 * 0.1.0 Initial Release
 * 0.1.1 Fix issue with OutputDirectory in NuGet Push
 * 0.1.2
@@ -116,7 +114,7 @@ grunt nugetkey --key=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 * 0.1.6
   * Remove apikey task
   * Add optional custom NuGet.exe path for each task
-* 0.2.0
+* 0.3.0
   * Add default `Source` option in `push` task to allow backward compatibility
   * Update NuGet.exe to version 3.5.0
   * Add task nugetupdate 
