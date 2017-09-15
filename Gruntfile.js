@@ -40,26 +40,23 @@
         options: {
           source: 'http://mynugetserver.com',
           apiKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'      
-        },
-        clean: {
-            pack: {
-                src: 'tests/PackageTest.1.0.0.nupkg'
-            },
-            restore: {
-                src: 'packages'
-            }
-        }
+        },       
       }
     },
     nugetupdate: {
-            update: {
-                src: 'tests/project.sln'
-            }
+      update: {
+        src: 'tests/project.sln'
+        }
     },
     clean: {
-      tests: ['.tmp']
+      tests: ['.tmp'],
+      pack: {
+        src: 'tests/PackageTest.1.0.0.nupkg'
+      },
+      restore: {
+        src: 'packages'
+      }
     },
-
     nodeunit: {
       tests: ['test/*.test.js']
     }
