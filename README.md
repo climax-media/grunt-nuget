@@ -64,8 +64,24 @@ For package restore: ([more information][restore-options])
   }
 ```
 
+For project update : ([more informations][update-options])
+
+```javascript
+	nugetupdate: {
+		update: {
+			src: 'project.sln'
+		}
+	}
+```
+
 ```javascript
 });
+```
+
+In order to avoid specifying your API Key inside your `Gruntfile` you can use command line task : ([more informations][key-options])
+
+```
+grunt nugetkey --key=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 ```
 
 [grunt]: https://github.com/gruntjs/grunt
@@ -73,6 +89,7 @@ For package restore: ([more information][restore-options])
 [pack-options]: https://github.com/spatools/grunt-nuget/wiki/Pack-Options
 [push-options]: https://github.com/spatools/grunt-nuget/wiki/Push-Options
 [restore-options]: https://github.com/spatools/grunt-nuget/wiki/Restore-Options
+[update-options]: https://github.com/spatools/grunt-nuget/wiki/Update-Options
 [key-options]: https://github.com/spatools/grunt-nuget/wiki/Key-Options
 
 ## Release History
@@ -96,3 +113,19 @@ For package restore: ([more information][restore-options])
     * Add support for csproj files in nugetpack command.
 * 0.1.0 Initial Release
 * 0.1.1 Fix issue with OutputDirectory in NuGet Push
+* 0.1.3
+    * Add package restore command
+    * Added mono support on platforms other than windows
+    * Fix issue when nuget-pack destination directory does not exists
+* 0.1.4
+    * Update NuGet.exe to version 2.8.2
+    * Fix issue in options parsing.
+* 0.1.5
+	* Update NuGet.exe to version 3.2.0
+* 0.1.6
+	* Update NuGet.exe to version 3.4.4
+	* Add default `Source` option in `push` task to allow backward compatibility
+* 0.1.7
+	* Update NuGet.exe to version 3.5.0
+* 0.2.0
+	* Add task nugetupdate 

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * grunt-nuget
  * https://github.com/spatools/grunt-nuget
  * Copyright (c) 2013 SPA Tools
@@ -27,7 +27,7 @@
 var path = require('path');
 var async = require('async');
 var _ = require('lodash');
-var nugetPathDefault = path.join(__dirname, 'NuGet.exe');
+var nugetPathDefault = path.join(__dirname, 'nuget.exe');
 
 module.exports = function(grunt) {
   var useMono = (process.platform !== 'win32'),
@@ -84,7 +84,7 @@ module.exports = function(grunt) {
           var _error = 'Error while trying to execute NuGet Command Line on file ' + path + '\n' + error;
           callback(error);
         } else {
-          if ('verbose' in args) {
+          if ('verbose' in args || 'verbosity' in args) {
             grunt.log.writeln(result);
           }
 
@@ -152,6 +152,11 @@ module.exports = function(grunt) {
       if (!isSolutionFile(path) && !isConfigFile(path)) {
         callback(path + '\' is not a valid solution file or packages.config');
         return;
+      },
+    update = function (path, args, callback) {
+      if (!isSolutionFile(path)) {
+        callback("File path '" + path + "' is not a valid solution file!");
+        return;
       }
 
       args = establishNugetExe(args);
@@ -173,6 +178,7 @@ module.exports = function(grunt) {
 
     pack: pack,
     push: push,
+    update: update,
     restore: restore
   };
 };
