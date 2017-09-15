@@ -1,4 +1,4 @@
-﻿/**
+/**
  * grunt-nuget
  * https://github.com/spatools/grunt-nuget
  * Copyright (c) 2013 SPA Tools
@@ -28,8 +28,6 @@ var path = require('path');
 var async = require('async');
 var _ = require('lodash');
 var nugetPathDefault = path.join(__dirname, 'NuGet.exe');
-var path = require("path");
-var nugetPath = path.join(__dirname, "nuget.exe");
 
 module.exports = function(grunt) {
   var useMono = (process.platform !== 'win32'),
@@ -68,16 +66,6 @@ module.exports = function(grunt) {
 
       result.push(command);
       result.push(path);
-        createSpawnCallback = function (path, args, callback) {
-            return function (error, result, code) {
-                if (error) {
-                    var _error = "Error while trying to execute NuGet Command Line on file " + path + "\n" + error;
-                    callback(error);
-                }
-                else {
-                    if ("verbose" in args || "verbosity" in args) {
-                        grunt.log.writeln(result);
-                    }
 
       for (var key in args) {
         var argKey = '-' + key[0].toUpperCase() + key.slice(1);
@@ -125,21 +113,6 @@ module.exports = function(grunt) {
         callback(path + '\' is not a NuGet specification (.nuspec) or project (.csproj) file');
         return;
       }
-            grunt.log.writeln("Trying to restore NuGet packages for " + path + ". ");
-            grunt.util.spawn({ cmd: executable, args: createArguments("Restore", path, args) }, createSpawnCallback(path, args, callback));
-        },
-        update = function (path, args, callback) {
-            if (!isSolutionFile(path)) {
-                callback("File path '" + path + "' is not a valid solution file!");
-                return;
-            }
-
-            grunt.log.writeln("Trying to update NuGet packages for " + path + ". ");
-            grunt.util.spawn({ cmd: executable, args: createArguments("Update", path, args) }, createSpawnCallback(path, args, callback));
-        },
-        setapikey = function (key, args, callback) {
-            grunt.util.spawn({ cmd: executable, args: createArguments("SetApiKey", key, args) }, createSpawnCallback(null, args, callback));
-        };
 
       if (useMono) {
         grunt.log.warn('NuGet pack for .proj files is not currently supported by mono. More information: http://nuget.codeplex.com/workitem/2140');
@@ -192,11 +165,6 @@ module.exports = function(grunt) {
 
       grunt.log.writeln('Trying to restore NuGet packages for ' + path);
       grunt.util.spawn(opts, createSpawnCallback(path, args, callback));
-        pack: pack,
-        push: push,
-        restore: restore,
-        update: update,
-        setapikey: setapikey
     };
 
   return {
