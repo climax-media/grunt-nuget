@@ -33,31 +33,31 @@ module.exports = function(grunt) {
   var useMono = (process.platform !== 'win32'),
     executable = useMono ? 'mono' : nugetPathDefault,
 
-  logCommand = function(opts) {
-    grunt.verbose.writeln('Running NuGet.exe from [' + opts.cmd + '] with args [' + opts.args + ']');
-  },
+    logCommand = function(opts) {
+      grunt.verbose.writeln('Running NuGet.exe from [' + opts.cmd + '] with args [' + opts.args + ']');
+    },
 
-  // Check if a nugetExe option was supplied and configure tasks to run it rather
-  // than the default.  If found, remove from args list so it isn't parsed into a
-  // NuGet CLI parameter.
-  establishNugetExe = function(args) {
-    if (args && args.nugetExe) {
-      if (grunt.file.exists(args.nugetExe)) {
-        executable = args.nugetExe;
+    // Check if a nugetExe option was supplied and configure tasks to run it rather
+    // than the default.  If found, remove from args list so it isn't parsed into a
+    // NuGet CLI parameter.
+    establishNugetExe = function(args) {
+      if (args && args.nugetExe) {
+        if (grunt.file.exists(args.nugetExe)) {
+          executable = args.nugetExe;
+        } else {
+          grunt.log.warn('Unable to locate NuGet.exe at ', args.nugetExe);
+          grunt.log.warn('Falling back to default: ', executable);
+        }
+
+        delete args.nugetExe;
       } else {
-        grunt.log.warn('Unable to locate NuGet.exe at ', args.nugetExe);
-        grunt.log.warn('Falling back to default: ', executable);
+        grunt.log.writeln('nugetExe option not supplied. Using default: ' + executable);
       }
 
-      delete args.nugetExe;
-    } else {
-      grunt.log.writeln('nugetExe option not supplied. Using default: ' + executable);
-    }
+      return args;
+    },
 
-    return args;
-  },
-
-  createArguments = function(command, path, args) {
+    createArguments = function(command, path, args) {
       var result = [];
 
       if (useMono) {
@@ -115,7 +115,8 @@ module.exports = function(grunt) {
       }
 
       if (useMono) {
-        grunt.log.warn('NuGet pack for .proj files is not currently supported by mono. More information: http://nuget.codeplex.com/workitem/2140');
+        grunt.log
+          .warn('NuGet pack for .proj files is not currently supported by mono. More information: http://nuget.codeplex.com/workitem/2140');
       }
 
       args = establishNugetExe(args);
@@ -152,8 +153,9 @@ module.exports = function(grunt) {
       if (!isSolutionFile(path) && !isConfigFile(path)) {
         callback(path + '\' is not a valid solution file or packages.config');
         return;
-      },
-    update = function (path, args, callback) {
+      }
+    },
+    update = function(path, args, callback) {
       if (!isSolutionFile(path)) {
         callback("File path '" + path + "' is not a valid solution file!");
         return;

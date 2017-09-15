@@ -1,8 +1,8 @@
 ﻿module.exports = function (grunt) {
   grunt.initConfig({
 
-    nugetpack: {
-	options: {
+   nugetpack: {
+	    options: {
         verbosity: "detailed"
         },
       defaultOptions: {
