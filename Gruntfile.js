@@ -2,6 +2,9 @@
   grunt.initConfig({
 
     nugetpack: {
+	options: {
+        verbosity: "detailed"
+        },
       defaultOptions: {
         options: {
         },
@@ -37,6 +40,18 @@
         options: {
           source: 'http://mynugetserver.com',
           apiKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
+        nugetupdate: {
+            update: {
+                src: 'tests/project.sln'
+            }
+        },
+        clean: {
+            pack: {
+                src: 'tests/PackageTest.1.0.0.nupkg'
+            },
+            restore: {
+                src: 'packages'
+            }
         }
       }
     },
