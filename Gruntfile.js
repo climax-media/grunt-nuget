@@ -39,11 +39,7 @@
         src: '.tmp/build/packages/*.nupkg',
         options: {
           source: 'http://mynugetserver.com',
-          apiKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
-        nugetupdate: {
-            update: {
-                src: 'tests/project.sln'
-            }
+          apiKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'      
         },
         clean: {
             pack: {
@@ -55,7 +51,11 @@
         }
       }
     },
-
+    nugetupdate: {
+            update: {
+                src: 'tests/project.sln'
+            }
+    },
     clean: {
       tests: ['.tmp']
     },
