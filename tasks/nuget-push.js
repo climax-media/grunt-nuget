@@ -29,14 +29,10 @@ var _ = require('lodash');
 
 module.exports = function(grunt) {
   var nuget = require('../libs/nuget')(grunt);
-    grunt.registerMultiTask('nugetpush', "NuGet Push - Publish NuGet package", function () {
-        var done = this.async(),
-            params = this.options({
-                source: "https://www.nuget.org/api/v2/package"
-            });
-
   grunt.registerMultiTask('nugetpush', 'NuGet Push - Publish NuGet package', function() {
-    var params = this.options(),
+    var params = this.options({
+                source: "https://www.nuget.org/api/v2/package"
+            }),
       done = this.async();
 
     async.each(
