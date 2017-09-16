@@ -78,6 +78,8 @@ For package restore: ([more information][restore-options])
 
 ## Release History
 
+* 0.1.7
+  * Update NuGet.exe to version 4.1
 * 0.1.6
   * Remove apikey task
   * Add optional custom NuGet.exe path for each task
