@@ -1,4 +1,4 @@
-/**
+﻿/**
  * grunt-nuget
  * https://github.com/spatools/grunt-nuget
  * Copyright (c) 2013 SPA Tools
@@ -27,37 +27,37 @@
 var path = require('path');
 var async = require('async');
 var _ = require('lodash');
-var nugetPathDefault = path.join(__dirname, 'nuget.exe');
+var nugetPathDefault = path.join(__dirname, 'NuGet.exe');
 
 module.exports = function(grunt) {
   var useMono = (process.platform !== 'win32'),
     executable = useMono ? 'mono' : nugetPathDefault,
 
-    logCommand = function(opts) {
-      grunt.verbose.writeln('Running NuGet.exe from [' + opts.cmd + '] with args [' + opts.args + ']');
-    },
+  logCommand = function(opts) {
+    grunt.verbose.writeln('Running NuGet.exe from [' + opts.cmd + '] with args [' + opts.args + ']');
+  },
 
-    // Check if a nugetExe option was supplied and configure tasks to run it rather
-    // than the default.  If found, remove from args list so it isn't parsed into a
-    // NuGet CLI parameter.
-    establishNugetExe = function(args) {
-      if (args && args.nugetExe) {
-        if (grunt.file.exists(args.nugetExe)) {
-          executable = args.nugetExe;
-        } else {
-          grunt.log.warn('Unable to locate NuGet.exe at ', args.nugetExe);
-          grunt.log.warn('Falling back to default: ', executable);
-        }
-
-        delete args.nugetExe;
+  // Check if a nugetExe option was supplied and configure tasks to run it rather
+  // than the default.  If found, remove from args list so it isn't parsed into a
+  // NuGet CLI parameter.
+  establishNugetExe = function(args) {
+    if (args && args.nugetExe) {
+      if (grunt.file.exists(args.nugetExe)) {
+        executable = args.nugetExe;
       } else {
-        grunt.log.writeln('nugetExe option not supplied. Using default: ' + executable);
+        grunt.log.warn('Unable to locate NuGet.exe at ', args.nugetExe);
+        grunt.log.warn('Falling back to default: ', executable);
       }
 
-      return args;
-    },
+      delete args.nugetExe;
+    } else {
+      grunt.log.writeln('nugetExe option not supplied. Using default: ' + executable);
+    }
 
-    createArguments = function(command, path, args) {
+    return args;
+  },
+
+  createArguments = function(command, path, args) {
       var result = [];
 
       if (useMono) {
@@ -84,7 +84,7 @@ module.exports = function(grunt) {
           var _error = 'Error while trying to execute NuGet Command Line on file ' + path + '\n' + error;
           callback(error);
         } else {
-          if ('verbose' in args || 'verbosity' in args) {
+          if ('verbose' in args) {
             grunt.log.writeln(result);
           }
 
@@ -115,8 +115,7 @@ module.exports = function(grunt) {
       }
 
       if (useMono) {
-        grunt.log
-          .warn('NuGet pack for .proj files is not currently supported by mono. More information: http://nuget.codeplex.com/workitem/2140');
+        grunt.log.warn('NuGet pack for .proj files is not currently supported by mono. More information: http://nuget.codeplex.com/workitem/2140');
       }
 
       args = establishNugetExe(args);
@@ -154,12 +153,6 @@ module.exports = function(grunt) {
         callback(path + '\' is not a valid solution file or packages.config');
         return;
       }
-    },
-    update = function(path, args, callback) {
-      if (!isSolutionFile(path)) {
-        callback("File path '" + path + "' is not a valid solution file!");
-        return;
-      }
 
       args = establishNugetExe(args);
 
@@ -180,7 +173,6 @@ module.exports = function(grunt) {
 
     pack: pack,
     push: push,
-    update: update,
     restore: restore
   };
 };

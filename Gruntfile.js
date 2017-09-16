@@ -1,10 +1,7 @@
 ﻿module.exports = function (grunt) {
   grunt.initConfig({
 
-   nugetpack: {
-	    options: {
-        verbosity: "detailed"
-        },
+    nugetpack: {
       defaultOptions: {
         options: {
         },
@@ -39,24 +36,15 @@
         src: '.tmp/build/packages/*.nupkg',
         options: {
           source: 'http://mynugetserver.com',
-          apiKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'      
-        },       
-      }
-    },
-    nugetupdate: {
-      update: {
-        src: 'tests/project.sln'
+          apiKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
         }
-    },
-    clean: {
-      tests: ['.tmp'],
-      pack: {
-        src: 'tests/PackageTest.1.0.0.nupkg'
-      },
-      restore: {
-        src: 'packages'
       }
     },
+
+    clean: {
+      tests: ['.tmp']
+    },
+
     nodeunit: {
       tests: ['test/*.test.js']
     }

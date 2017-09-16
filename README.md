@@ -22,7 +22,7 @@ grunt.initConfig({
 
 For package creation: ([more information][pack-options])
 
-> *Note: NuGet Pack does not work with mono. See [here](http://nuget.codeplex.com/workitem/2140).*
+*Note: NuGet Pack does not work with mono. See [here](http://nuget.codeplex.com/workitem/2140).*
 
 ```javascript
   nugetpack: {
@@ -40,13 +40,14 @@ For package publication: ([more information][push-options])
 
 ```javascript
   nugetpush: {
-    dist: {
-      src: 'tests/*.nupkg',
-      options: {
-        apiKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX',
+  	dist: {
+  		src: 'tests/*.nupkg',
+
+  		options: {
+  			apiKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX',
         nugetExe: 'test/fixtures/SampleNugetPackage/.nuget/NuGet.exe'
-      }
-    }
+  		}
+  	}
   }
 ```
 
@@ -64,24 +65,8 @@ For package restore: ([more information][restore-options])
   }
 ```
 
-For project update : ([more informations][update-options])
-
-```javascript
-	nugetupdate: {
-		update: {
-			src: 'project.sln'
-		}
-	}
-```
-
 ```javascript
 });
-```
-
-In order to avoid specifying your API Key inside your `Gruntfile` you can use command line task : ([more informations][key-options])
-
-```
-grunt nugetkey --key=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 ```
 
 [grunt]: https://github.com/gruntjs/grunt
@@ -89,32 +74,26 @@ grunt nugetkey --key=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 [pack-options]: https://github.com/spatools/grunt-nuget/wiki/Pack-Options
 [push-options]: https://github.com/spatools/grunt-nuget/wiki/Push-Options
 [restore-options]: https://github.com/spatools/grunt-nuget/wiki/Restore-Options
-[update-options]: https://github.com/spatools/grunt-nuget/wiki/Update-Options
 [key-options]: https://github.com/spatools/grunt-nuget/wiki/Key-Options
 
 ## Release History
 
-
-* 0.1.0 Initial Release
-* 0.1.1 Fix issue with OutputDirectory in NuGet Push
-* 0.1.2
-    * Update NuGet.exe to version 2.8
-    * Add support for csproj files in nugetpack command.
-* 0.1.3
-    * Add package restore command
-    * Added mono support on platforms other than windows
-    * Fix issue when nuget-pack destination directory does not exists
-* 0.1.4
-    * Update NuGet.exe to version 2.8.2
-    * Fix issue in options parsing.
+* 0.1.6
+  * Remove apikey task
+  * Add optional custom NuGet.exe path for each task
 * 0.1.5
   * Migrate deprecated Grunt utils (`_`, `async`) in favour of async & lodash libs
   * Formatting (tabs -> spaces)
   * Remove Visual Studio solution files and tests folder
-* 0.1.6
-  * Remove apikey task
-  * Add optional custom NuGet.exe path for each task
-* 0.2.0
-  * Add default `Source` option in `push` task to allow backward compatibility
-  * Update NuGet.exe to version 3.5.0
-  * Add task nugetupdate 
+* 0.1.4
+    * Update NuGet.exe to version 2.8.2
+    * Fix issue in options parsing.
+* 0.1.3
+  * Add package restore command
+  * Added mono support on platforms other than windows
+  * Fix issue when nuget-pack destination directory does not exists
+* 0.1.2
+    * Update NuGet.exe to version 2.8
+    * Add support for csproj files in nugetpack command.
+* 0.1.0 Initial Release
+* 0.1.1 Fix issue with OutputDirectory in NuGet Push
